@@ -2,7 +2,6 @@
 """
 Created on Thu Oct 10 09:21:00 2024
 
-@author: C53585
 """
 
 import folium
