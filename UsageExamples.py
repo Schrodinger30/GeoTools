@@ -29,3 +29,7 @@ location_data = gt.geocoder_nominatim(locations,
                                       'PostalCode',
                                       'City',
                                       'Country')
+
+# Create map
+m = gt.prepare_folium_map()
+
