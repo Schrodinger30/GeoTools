@@ -1,7 +1,9 @@
+import time
 import folium
 import cbsodata
 import pandas as pd
 import folium.plugins
+from tqdm import tqdm
 import geopandas as gpd
 from geopy.geocoders import Nominatim
 from folium.map import Marker, Template, FeatureGroup
@@ -78,28 +80,57 @@ class GeoTools():
     
     
     
-    def geocoder_nominatim(self,
-                           query=None):
+    def geocoder_nominatim(df,
+                       ObjectName,
+                       ObjectStreet,
+                       ObjectNumber,
+                       ObjectPostalCode,
+                       ObjectCity,
+                       ObjectCountry):
         """ Geocoding using Nominatim API
         (https://wiki.openstreetmap.org/wiki/Nominatim)
         
         
         Args:
-            query (str):    Name and / or address to search OSM data
+            df (dataframe):             Dataframe containing the objects
+            ObjectName (str):           Columnname containing object name
+            ObjectStreet (str):         Columnname containing object streetname
+            ObjectNumber (str):         Columnname containing object number
+            ObjectPostalCode (str):     Columnname containing object postalcode
+            ObjectCity (str):           Columnname containing object city
+            ObjectCountry (str):        Columnname containing object country
+            
         
         Returns:
-            locs (dictionary): Dictionary of collected OSM data for each query
+            locs_list (dataframe): Dataframe of collected OSM data for each object
         """
         
-        locs = {}
+        locs_list = []
         
-        app = Nominatim(user_agent="GeoTools")
+        for index, row in tqdm(df.iterrows(),
+                               total=df.shape[0],
+                               desc="Get location data from OSM"):
+            
+            query = row[ObjectName] + ',' + \
+                row[ObjectStreet] + ',' + \
+                    row[ObjectNumber] + ',' + \
+                        row[ObjectPostalCode] + ',' + \
+                            row[ObjectCity] + ',' + \
+                                row[ObjectCountry]
+            
+            app = Nominatim(user_agent="GeoTools")
+            
+            try:
+                loc = app.geocode(query).raw
+                
+                time.sleep(1)
+                
+                locs_list.append(loc)
+            
+            except:
+                locs_list.append({})
         
-        loc = app.geocode(query).raw
-        
-        locs.update(loc) 
-        
-        return locs
+        return pd.DataFrame(locs_list)
     
     
     def prepare_folium_map(self, 
