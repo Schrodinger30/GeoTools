@@ -1,21 +1,16 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Thu Oct 10 09:21:00 2024
-
-"""
-
 import folium
 import cbsodata
 import pandas as pd
 import folium.plugins
 import geopandas as gpd
+from geopy.geocoders import Nominatim
 from folium.map import Marker, Template, FeatureGroup
  
 
-class GeoPy():
+class GeoTools():
     
     def __init__(self):
-        """ Initialise the class 'GeoPy'
+        """ Initialise the class 'GeoTools'
         
         Args:
             None
@@ -29,7 +24,10 @@ class GeoPy():
         return None
     
     
-    def get_pdok_data(self, url, crs):
+    
+    def get_pdok_data(self, 
+                      url, 
+                      crs):
         """ Get geodatasets from PDOK (https://www.pdok.nl/).
             PDOK provides over 200 dutch governmental geodatasets.
             Datasets are delivered using WMS or WFS.
@@ -60,7 +58,9 @@ class GeoPy():
         return geo_layer
     
     
-    def get_cbs_data(self, cbs_id):
+    
+    def get_cbs_data(self, 
+                     cbs_id):
         """ Get data from the open data interface of Statistics NL (CBS)
             using CBS open data portal (package: cbsodata)
         
@@ -77,18 +77,29 @@ class GeoPy():
         return cbs_data
     
     
-    def prepare_pc6_data(self):
-        """ Prepare CBS statistical data on postalcode level
+    
+    def geocoder_nominatim(self,
+                           query=None):
+        """ Geocoding using Nominatim API
+        (https://wiki.openstreetmap.org/wiki/Nominatim)
         
-            https://shorturl.at/XLyfA
         
         Args:
-            cbs_id (str):  Unique Identifier of the table
+            query (str):    Name and / or address to search OSM data
         
         Returns:
-            cbs_data (dataframe): Dataframe containing selected CBS dataset
+            locs (dictionary): Dictionary of collected OSM data for each query
         """
         
+        locs = {}
+        
+        app = Nominatim(user_agent="GeoTools")
+        
+        loc = app.geocode(query).raw
+        
+        locs.update(loc) 
+        
+        return locs
     
     
     def prepare_folium_map(self, 
@@ -135,6 +146,7 @@ class GeoPy():
         #folium.LayerControl().add_to(folium_map)
         
         return folium_map
+    
     
     
     def choropleth_layer(self,
