@@ -188,6 +188,15 @@ class GeoTools():
     
     
     
+    def location_markers(self,
+                         locations,
+                         icon="location-dot",
+                         add_to_existing_map=False):
+        
+        return None
+    
+    
+    
     def choropleth_layer(self,
                          geo_data,
                          data,
