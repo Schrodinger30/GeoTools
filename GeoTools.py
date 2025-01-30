@@ -81,16 +81,14 @@ class GeoTools():
     
     
     def geocoder_nominatim(df,
-                       ObjectName,
-                       ObjectStreet,
-                       ObjectNumber,
-                       ObjectPostalCode,
-                       ObjectCity,
-                       ObjectCountry):
-        """ Geocoding using Nominatim API
-        (https://wiki.openstreetmap.org/wiki/Nominatim)
-        
-        
+                           ObjectName,
+                           ObjectStreet,
+                           ObjectNumber,
+                           ObjectPostalCode,
+                           ObjectCity,
+                           ObjectCountry):
+        """ Geocoding using Nominatim API (https://wiki.openstreetmap.org/wiki/Nominatim)
+                
         Args:
             df (dataframe):             Dataframe containing the objects
             ObjectName (str):           Columnname containing object name
@@ -131,6 +129,7 @@ class GeoTools():
                 locs_list.append({})
         
         return pd.DataFrame(locs_list)
+    
     
     
     def prepare_folium_map(self, 
