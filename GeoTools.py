@@ -103,12 +103,15 @@ class GeoTools():
             locs_list (dataframe): Dataframe of collected OSM data for each object
         """
         
+        # Create emtpy list to store location data for each row
         locs_list = []
         
+        # Iterate through dataframe and collect location data for each object
         for index, row in tqdm(df.iterrows(),
                                total=df.shape[0],
                                desc="Get location data from OSM"):
             
+            # Define query
             query = row[ObjectName] + ',' + \
                 row[ObjectStreet] + ',' + \
                     row[ObjectNumber] + ',' + \
@@ -116,16 +119,21 @@ class GeoTools():
                             row[ObjectCity] + ',' + \
                                 row[ObjectCountry]
             
+            # Initiate API
             app = Nominatim(user_agent="GeoTools")
             
             try:
+                # Get data from API
                 loc = app.geocode(query).raw
                 
+                # Initiate 1 second wait before next request due to API limits
                 time.sleep(1)
                 
+                # Append collected location data to list
                 locs_list.append(loc)
             
             except:
+                # If no data can be collected append empty dictionary to list
                 locs_list.append({})
         
         return pd.DataFrame(locs_list)
