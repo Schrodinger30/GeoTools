@@ -80,7 +80,8 @@ class GeoTools():
     
     
     
-    def geocoder_nominatim(df,
+    def geocoder_nominatim(self,
+                           df,
                            ObjectName,
                            ObjectStreet,
                            ObjectNumber,
@@ -113,7 +114,7 @@ class GeoTools():
             
             # Define query
             query = row[ObjectName] + ',' + \
-                row[ObjectStreet] + ',' + \
+                row[ObjectStreet] + ' ' + \
                     row[ObjectNumber] + ',' + \
                         row[ObjectPostalCode] + ',' + \
                             row[ObjectCity] + ',' + \
