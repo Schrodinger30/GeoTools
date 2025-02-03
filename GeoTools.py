@@ -191,7 +191,8 @@ class GeoTools():
     def location_markers(self,
                          locations,
                          icon="location-dot",
-                         add_to_existing_map=False):
+                         add_to_existing_map=False,
+                         map_to_use=None):
         
         return None
     
