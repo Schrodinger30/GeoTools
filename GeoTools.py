@@ -48,7 +48,7 @@ class GeoTools():
                 and 12-mile offshore coastal zone
         
         Returns:
-            geo_layer (datatype):   
+            geo_layer (object):   
                 
                 Geographical layer based on PDOK data
         """
@@ -176,6 +176,7 @@ class GeoTools():
                            centerpoint_lat=None,
                            centerpoint_lon=None,
                            tile_name=None,
+                           layercontrol=True,
                            fullscreen=True,
                            minimap=False,
                            oms=False,):
@@ -229,17 +230,17 @@ class GeoTools():
             tile_name = tile_name
             
         # Create basemap with selected tile and centerpoint coordinates   
-        folium_map = folium.Map(location = centerpoint_coords,
-                                tiles = tile_name,
+        folium_map = folium.Map(location=centerpoint_coords,
+                                tiles=tile_name,
                                 zoom_start=7,
-                                control_scale = True,
-                                control = False)
+                                control_scale=True,
+                                control=False)
         
         # Add fullscreen functionality to map
         folium.plugins.Fullscreen().add_to(folium_map)
         
         # Add layer control
-        #folium.LayerControl().add_to(folium_map)
+        folium.LayerControl().add_to(folium_map)
         
         return folium_map
     
