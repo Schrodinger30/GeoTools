@@ -35,16 +35,22 @@ class GeoTools():
             Datasets are delivered using WMS or WFS.
         
         Args:
-            url (str):  PDOK dataset accessPoint URL
+            url (str):  
+                
+                PDOK dataset accessPoint URL
             
-            crs (str):  Coordinate Reference System to be used
+            crs (str):  
+                
+                Coordinate Reference System to be used
             
-                        EPSG:28992 for Netherlands - onshore, 
-                        including Waddenzee, Dutch Wadden Islands 
-                        and 12-mile offshore coastal zone
+                EPSG:28992 for Netherlands - onshore, 
+                including Waddenzee, Dutch Wadden Islands 
+                and 12-mile offshore coastal zone
         
         Returns:
-            geo_layer (datatype):   Geographical layer based on PDOK data
+            geo_layer (datatype):   
+                
+                Geographical layer based on PDOK data
         """
         
         # Read data 
@@ -67,10 +73,14 @@ class GeoTools():
             using CBS open data portal (package: cbsodata)
         
         Args:
-            cbs_id (str):  Unique Identifier of the table
+            cbs_id (str):  
+                
+                Unique Identifier of the table
         
         Returns:
-            cbs_data (dataframe): Dataframe containing selected CBS dataset
+            cbs_data (dataframe): 
+                
+                Dataframe containing selected CBS dataset
         """
         
         # Get CBS dataset
@@ -91,17 +101,38 @@ class GeoTools():
         """ Geocoding using Nominatim API (https://wiki.openstreetmap.org/wiki/Nominatim)
                 
         Args:
-            df (dataframe):             Dataframe containing the objects
-            ObjectName (str):           Columnname containing object name
-            ObjectStreet (str):         Columnname containing object streetname
-            ObjectNumber (str):         Columnname containing object number
-            ObjectPostalCode (str):     Columnname containing object postalcode
-            ObjectCity (str):           Columnname containing object city
-            ObjectCountry (str):        Columnname containing object country
+            df (dataframe):             
+                
+                Dataframe containing the objects
+                
+            ObjectName (str):          
+                
+                Columnname containing object name
+                
+            ObjectStreet (str):         
+                
+                Columnname containing object streetname
+                
+            ObjectNumber (str):        
+                
+                Columnname containing object number
+                
+            ObjectPostalCode (str):     
+                
+                Columnname containing object postalcode
+                
+            ObjectCity (str):           
+                
+                Columnname containing object city
+                
+            ObjectCountry (str):       
+                
+                Columnname containing object country
             
-        
         Returns:
-            locs_list (dataframe): Dataframe of collected OSM data for each object
+            locs_list (dataframe): 
+                
+                Dataframe of collected OSM data for each object
         """
         
         # Create emtpy list to store location data for each row
@@ -144,19 +175,45 @@ class GeoTools():
     def prepare_folium_map(self, 
                            centerpoint_lat=None,
                            centerpoint_lon=None,
-                           tile_name=None):
+                           tile_name=None,
+                           fullscreen=True,
+                           minimap=False,
+                           oms=False,):
         """ Prepare folium basemap
         
         Args:
-            centerpoint_lat (float):    Centerpoint latitude
-                                        Defaults to 41.000150980792405
-            centerpoint_lon (float):    Centerpoint longitude
-                                        Defaults to 34.99998540139929
-            tile (str):                 Tile used on map
-                                        Defaults to 'cartodbpositron'
+            centerpoint_lat (float):    
+                
+                Centerpoint latitude
+                Defaults to 41.000150980792405
+                
+            centerpoint_lon (float):    
+                
+                Centerpoint longitude
+                Defaults to 34.99998540139929
+                
+            tile (str):                 
+                
+                Tile used on map
+                Defaults to 'cartodbpositron'
+                
+            fullscreen (boolean):
+                
+                Boolean to enable / disable fullscreen toggle button
+                
+            minimap (boolean):
+                
+                Boolean to enable / disable minimap
+                
+            oms (boolean):
+                
+                Boolean to enable / disable functionality to 'spiderfy'
+                overlapping markers when clicked.
         
         Returns:
-            folium_map (datatype): Folium basemap
+            folium_map (object): 
+                
+                Folium basemap
         """
         
         # Set centerpoint coordinates
@@ -198,6 +255,54 @@ class GeoTools():
     
     
     
+    def markercluster(self):
+        
+        return None
+    
+    
+    
+    def polygon(self):
+        
+        return None
+    
+    
+    
+    def multipolygon(self):
+        
+        return None
+    
+    
+    
+    def linestring(self):
+        
+        return None
+    
+    
+    
+    def timestampedgeojson(self):
+        
+        return None
+    
+    
+    
+    def heatmap(self):
+        
+        return None
+    
+    
+    
+    def heatmapwithtime(self):
+        
+        return None
+    
+    
+    
+    def grouped_layercontrol(self):
+        
+        return None
+    
+    
+    
     def choropleth_layer(self,
                          geo_data,
                          data,
@@ -214,15 +319,25 @@ class GeoTools():
         """ Create choropleth layer to add to folium basemap
         
         Args:
-            centerpoint_lat (float):    Centerpoint latitude
-                                        Defaults to 41.000150980792405
-            centerpoint_lon (float):    Centerpoint longitude
-                                        Defaults to 34.99998540139929
-            tile (str):                 Tile used on map
-                                        Defaults to 'cartodbpositron'
+            centerpoint_lat (float):    
+                
+                Centerpoint latitude
+                Defaults to 41.000150980792405
+                
+            centerpoint_lon (float):    
+                
+                Centerpoint longitude
+                Defaults to 34.99998540139929
+                
+            tile (str):            
+                
+                Tile used on map
+                Defaults to 'cartodbpositron'
         
         Returns:
-            choropleth_layer (datatype): Choropleth layer 
+            choropleth_layer (object): 
+                
+                Choropleth layer 
         """
         
         choro_layer = folium.Choropleth(geo_data = geo_data,
