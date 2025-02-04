@@ -8,8 +8,6 @@ import geopandas as gpd
 from geopy.geocoders import Nominatim
 from folium.map import Marker, Template, FeatureGroup
 
-# Github test
-
 class GeoTools:
 
     def __init__(self):

@@ -5,11 +5,9 @@ import pandas as pd
 # Instantiate GeoTools class
 gt = GeoTools.GeoTools()
 
-# Github test
-
-# Example 1: Get location data using Nominatim API
+# Example 1: Get location data using Nominatim API.
 # ----------------------------------------------------------------------------
-# Example locations in the Netherlands
+# Example locations in the Netherlands.
 data = {'Name': ['Anne Frank House','Van Gogh Museum','Rijksmuseum',
                  'Keukenhof','Efteling','Markthal','Giethoorn',''],
         'Street': ['','','','','','','','John Adams Park'],
@@ -19,10 +17,10 @@ data = {'Name': ['Anne Frank House','Van Gogh Museum','Rijksmuseum',
                  '','Wassenaar'],
         'Country': ['NL','NL','NL','NL','NL','NL','NL','NL']}
 
-# Create dataframe from locations
+# Create dataframe from locations.
 locations = pd.DataFrame(data)
 
-# Get OSM data for each location
+# Get OSM data for each location.
 location_data = gt.geocoder_nominatim(locations,
                                       'Name',
                                       'Street',
@@ -31,10 +29,9 @@ location_data = gt.geocoder_nominatim(locations,
                                       'City',
                                       'Country')
 
-# Example 2: Add location markers
+# Example 2: Add location markers.
 # ----------------------------------------------------------------------------
-# Add markers to map, no existing map present so map with default configuration
-# will be created
+# Add markers to map, no existing map present. Create map with default configuration.
 markers_map = gt.location_markers(location_data,
                                   "lat",
                                   "lon"
