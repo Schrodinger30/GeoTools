@@ -5,6 +5,7 @@ import pandas as pd
 # Instantiate GeoTools class
 gt = GeoTools.GeoTools()
 
+# Github test
 
 # Example 1: Get location data using Nominatim API
 # ----------------------------------------------------------------------------
