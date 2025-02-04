@@ -33,7 +33,7 @@ location_data = gt.geocoder_nominatim(locations,
 # Example 2: Add location markers
 # ----------------------------------------------------------------------------
 # Create map
-m = gt.prepare_folium_map(tile="openstreetmap")
+m = gt.prepare_folium_map(tile_name="openstreetmap")
 
 markers_map = gt.location_markers(location_data,
                                   "lat",
@@ -41,4 +41,4 @@ markers_map = gt.location_markers(location_data,
                                   add_to_existing_map=True,
                                   map_to_use=m)
                                   
-markers_map.save('markers_map.html')
+markers_map.save('.\output\markers_map.html')
