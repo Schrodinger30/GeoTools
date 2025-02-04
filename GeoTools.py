@@ -148,7 +148,7 @@ class GeoTools:
         self,
         centerpoint_lat=None,
         centerpoint_lon=None,
-        tile_name=None,
+        tile_name="openstreetmap",
         layercontrol=True,
         fullscreen=True,
         minimap=False,
@@ -183,12 +183,6 @@ class GeoTools:
         else:
             centerpoint_coords = (centerpoint_lat, centerpoint_lon)
 
-        # Set basemap tile
-        if tile_name == None:
-            tile_name = "cartodbpositron"
-        else:
-            tile_name = tile_name
-
         # Create basemap with selected tile and centerpoint coordinates
         folium_map = folium.Map(
             location=centerpoint_coords,
@@ -212,15 +206,70 @@ class GeoTools:
         locations,
         latitude,
         longitude,
-        icon="location-dot",
+        name=None,
+        icon="map-pin",
+        color="orange",
+        tooltip=False,
+        tooltip_text=None,
+        popup=False,
+        antpath=None,
         add_to_existing_map=False,
-        map_to_use=None,
+        map_to_use=None
     ):
-        
-        for index, row in locations.iterrows():
-            folium.Marker(location=[row[latitude],row[longitude]]).add_to(map_to_use)
+        """Create markers from coordinates
 
-        return map_to_use
+        Args:
+            locations (dataframe):          Dataframe containing all locations
+
+            latitude (float):               Latitude of marker
+
+            longitude (float):              Longitude of marker
+
+            icon (boolean):                 Boolean to enable / disable fullscreen toggle button
+            
+            color (str):                    Marker color. Available colors: 'red','blue','green',
+                                                'purple','orange','darkred','lightred','beige',
+                                                'darkblue','darkgreen','cadetblue','darkpurple',
+                                                'white','pink','lightblue','lightgreen','gray',
+                                                'black','lightgray'
+                                                
+            tooltip (boolean):              Boolean to enable / disable tooltip when hovering over marker
+                
+            tooltip_text (str):             String containing the tooltip text
+                
+            popup (boolean):                Boolean to enable / disable popup when clicking a marker
+                                            Popup will be populated with the tooltip text
+
+            add_to_existing_map (boolean):  Boolean to enable / disable usage of an existing folium map object
+
+            map_to_use (object):            Name of an existing folium map object
+
+        Returns:
+            m (object):                     Folium basemap
+        """
+        
+        if add_to_existing_map:
+            m = map_to_use
+        else:
+            # Get average latitude and longitude from dataframe
+            centerpoint_lat = pd.to_numeric(locations[latitude]).mean()
+            centerpoint_lon = pd.to_numeric(locations[longitude]).mean()
+            
+            # Create map using mean latitude and longitude from dataframe
+            # as centerpoint coordinates
+            m = self.prepare_folium_map(centerpoint_lat=centerpoint_lat,
+                                        centerpoint_lon=centerpoint_lon)
+        
+        # Create and add marker for each location in dataframe
+        for index, row in locations.iterrows():
+            folium.Marker(location=[row[latitude],row[longitude]],
+                          icon=folium.Icon(color=color,
+                                           icon=icon,
+                                           prefix="fa"),
+                          pathCoords=antpath
+                          ).add_to(m)
+
+        return m
 
     def markercluster(self):
 
