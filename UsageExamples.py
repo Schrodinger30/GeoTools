@@ -37,4 +37,4 @@ markers_map = gt.location_markers(location_data,
                                   "lon"
                                   )
                                   
-markers_map.save('.\output\markers_map.html')
+markers_map.save('./output/markers_map.html')
