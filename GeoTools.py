@@ -199,7 +199,8 @@ class GeoTools:
         )
 
         # Add fullscreen functionality to map
-        folium.plugins.Fullscreen().add_to(folium_map)
+        if fullscreen:
+            folium.plugins.Fullscreen().add_to(folium_map)
 
         # Add layer control
         folium.LayerControl().add_to(folium_map)
@@ -209,12 +210,17 @@ class GeoTools:
     def location_markers(
         self,
         locations,
+        latitude,
+        longitude,
         icon="location-dot",
         add_to_existing_map=False,
         map_to_use=None,
     ):
+        
+        for index, row in locations.iterrows():
+            folium.Marker(location=[row[latitude],row[longitude]]).add_to(map_to_use)
 
-        return None
+        return map_to_use
 
     def markercluster(self):
 
