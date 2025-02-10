@@ -8,6 +8,7 @@ import geopandas as gpd
 from geopy.geocoders import Nominatim
 from folium.map import Marker, Template, FeatureGroup
 
+
 class GeoTools:
 
     def __init__(self):
@@ -213,7 +214,7 @@ class GeoTools:
         popup=False,
         antpath=None,
         add_to_existing_map=False,
-        map_to_use=None
+        map_to_use=None,
     ):
         """Create markers from coordinates
 
@@ -225,17 +226,17 @@ class GeoTools:
             longitude (float):              Longitude of marker
 
             icon (boolean):                 Boolean to enable / disable fullscreen toggle button
-            
+
             color (str):                    Marker color. Available colors: 'red','blue','green',
                                                 'purple','orange','darkred','lightred','beige',
                                                 'darkblue','darkgreen','cadetblue','darkpurple',
                                                 'white','pink','lightblue','lightgreen','gray',
                                                 'black','lightgray'
-                                                
+
             tooltip (boolean):              Boolean to enable / disable tooltip when hovering over marker
-                
+
             tooltip_text (str):             String containing the tooltip text
-                
+
             popup (boolean):                Boolean to enable / disable popup when clicking a marker
                                             Popup will be populated with the tooltip text
 
@@ -246,27 +247,27 @@ class GeoTools:
         Returns:
             m (object):                     Folium basemap
         """
-        
+
         if add_to_existing_map:
             m = map_to_use
         else:
             # Get average latitude and longitude from dataframe
             centerpoint_lat = pd.to_numeric(locations[latitude]).mean()
             centerpoint_lon = pd.to_numeric(locations[longitude]).mean()
-            
+
             # Create map using mean latitude and longitude from dataframe
             # as centerpoint coordinates
-            m = self.prepare_folium_map(centerpoint_lat=centerpoint_lat,
-                                        centerpoint_lon=centerpoint_lon)
-        
+            m = self.prepare_folium_map(
+                centerpoint_lat=centerpoint_lat, centerpoint_lon=centerpoint_lon
+            )
+
         # Create and add marker for each location in dataframe
         for index, row in locations.iterrows():
-            folium.Marker(location=[row[latitude],row[longitude]],
-                          icon=folium.Icon(color=color,
-                                           icon=icon,
-                                           prefix="fa"),
-                          pathCoords=antpath
-                          ).add_to(m)
+            folium.Marker(
+                location=[row[latitude], row[longitude]],
+                icon=folium.Icon(color=color, icon=icon, prefix="fa"),
+                pathCoords=antpath,
+            ).add_to(m)
 
         return m
 
